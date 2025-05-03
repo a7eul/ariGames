@@ -13,6 +13,7 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        float s = Input.GetAxis("Mouse X");
+        Debug.Log(s);
     }
 }

@@ -4,26 +4,32 @@ public class test : MonoBehaviour
 {
     public Rigidbody rb;
     public Transform pos;
+    float xRotation = 0f;
+    public GameObject bullet;
+    public Transform point;
     void Start()
     {
-        Vector3 dir = new Vector3(0,100,0);
-        pos.Translate(dir);
+       
     }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W)) 
+        float s = Input.GetAxis("Mouse X");
+        Debug.Log(s);
+        Transform r = Camera.main.transform;
+        pos.Rotate(0, Input.GetAxis("Mouse X") * 2, 0);
+        rb.velocity = (pos.forward * Input.GetAxis("Vertical") + pos.right * Input.GetAxis("Horizontal")) * 40;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        float mouseY = Input.GetAxis("Mouse Y") * 2;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90, 90);
+        r.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+        if (Input.GetMouseButtonDown(0))
         {
-            rb.AddForce(new Vector3(150, 0, 0));
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            rb.AddForce(new Vector3(-150, 0, 0));
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(new Vector3(0, 1000, 0));
+            Instantiate(bullet, point.position, Quaternion.identity);
         }
     }
 }
