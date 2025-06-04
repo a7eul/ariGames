@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class enemy : MonoBehaviour
 {
-    public Transform Player;
+    public Transform point;
+    public Rigidbody body;
     public CharacterController characterController;
+    public float speed = 1;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<bullet>() != null)
@@ -18,9 +20,10 @@ public class enemy : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, Player.position,3f);
+        body.AddForce(transform.forward * speed);
+        transform.LookAt(point);
+        
     }
 }
